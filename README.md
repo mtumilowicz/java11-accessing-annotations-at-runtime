@@ -51,4 +51,43 @@ by `java.lang.reflect.AnnotatedElement` interface
     }
     ```
 1. tests
-    * 
+    * get class annotations
+        ```
+        Class<Annotated> clazz = Annotated.class;
+        Annotation[] annotations = clazz.getAnnotations();
+        
+        assertThat(Arrays.toString(annotations), is("[@ClassAnnotation(value=\"new\")]"));
+        ```
+    * get annotation as a concrete class
+        ```
+        var clazz = Annotated.class;
+        ClassAnnotation annotation = clazz.getAnnotation(ClassAnnotation.class);
+        
+        assertThat(annotation.value(), is("new"));
+        ```
+    * get all method annotations
+        ```
+        List<Annotation> methodAnnotations = Arrays.stream(Annotated.class.getDeclaredMethods())
+                .flatMap(method -> Arrays.stream(method.getAnnotations()))
+                .collect(Collectors.toList());
+        
+        assertThat(methodAnnotations.toString(), is("[@java.lang.Deprecated(forRemoval=true, since=\"12\")]"));
+        ```
+    * get all deprecated annotations of all methods
+        ```
+        List<Deprecated> deprecatedAnnotations = Arrays.stream(Annotated.class.getDeclaredMethods())
+                .map(method -> method.getAnnotation(Deprecated.class))
+                .collect(Collectors.toList());
+        
+        assertThat(deprecatedAnnotations.size(), is(1));
+        Deprecated deprecated = deprecatedAnnotations.get(0);
+        
+        assertThat(deprecated.forRemoval(), is(true));
+        assertThat(deprecated.since(), is("12"));
+        ```
+    * get annotations of specific field
+        ```
+        Annotation[] annotations = Annotated.class.getDeclaredField("count").getAnnotations();
+        
+        assertThat(Arrays.toString(annotations), is("[@FieldAnnotation()]"));
+        ```
