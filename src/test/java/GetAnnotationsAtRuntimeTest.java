@@ -47,5 +47,12 @@ public class GetAnnotationsAtRuntimeTest {
         assertThat(deprecated.forRemoval(), is(true));
         assertThat(deprecated.since(), is("12"));
     }
+    
+    @Test
+    public void getAnnotationsOnSpecificField() throws NoSuchFieldException {
+        var annotations = Annotated.class.getDeclaredField("count").getAnnotations();
+        
+        assertThat(Arrays.toString(annotations), is("[@FieldAnnotation()]"));
+    }
 
 }
