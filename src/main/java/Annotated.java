@@ -1,17 +1,13 @@
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Created by mtumilowicz on 2019-02-19.
  */
-@Annotation1
-public class Annotated {
+@ClassAnnotation("new")
+class Annotated {
     
-    private List field = new LinkedList<String>();
-
-    @SuppressWarnings("unchecked")
-    @Deprecated
+    @FieldAnnotation
+    private int count;
+    
+    @Deprecated(forRemoval = true, since = "12")
     void go() {
-        field.add(1);
     }
 }
