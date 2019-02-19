@@ -4,6 +4,7 @@ _Reference_: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/l
 
 # preface
 * https://github.com/mtumilowicz/java-annotations-retention-policy
+* https://github.com/mtumilowicz/java-reflection
 * we are able to access only annotations, which have runtime retention policy
 * annotations are Java objects
 * `java.lang.reflect.AnnotatedElement`
