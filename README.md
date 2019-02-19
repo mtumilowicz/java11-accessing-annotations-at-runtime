@@ -7,7 +7,8 @@ _Reference_: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/l
 * https://github.com/mtumilowicz/java-reflection
 * we are able to access only annotations, which have runtime retention policy
 * annotations are Java objects
-* `java.lang.reflect.AnnotatedElement`
+* annotated elements (like field, or class) are represented in Java
+by `java.lang.reflect.AnnotatedElement` interface
 * classes that implements `AnnotatedElement`:
     * `AccessibleObject`
     * `Class`
@@ -18,3 +19,36 @@ _Reference_: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/l
     * `Module`
     * `Package`
     * `Parameter`
+
+# project description
+1. annotations
+    ```
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented()
+    @interface ClassAnnotation {
+        String value();
+    }
+    ```
+    ```
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @interface FieldAnnotation {
+    }
+    ```
+1. class for test purposes
+    ```
+    @ClassAnnotation("new")
+    class Annotated {
+        
+        @FieldAnnotation
+        private int count;
+        
+        @Deprecated(forRemoval = true, since = "12")
+        void go() {
+        }
+    }
+    ```
+1. tests
+    * 
